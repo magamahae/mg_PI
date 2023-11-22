@@ -32,7 +32,15 @@ def PlayTimeGenre(genero: str):
     return {"Año de lanzamiento con más horas jugadas para Género {}: {}".format(genero, max_year)}
 
     #retorno: {"Año de lanzamiento con más horas jugadas para Género X" : 2013}
-
+#------------
+@app.get('/sentiment_analysis',
+         description=""" 
+                    INSTRUCCIONES<br>
+                    1. Para empezar haga click en -> "Try it out".<br>
+                    2. Ingrese el nombre del juego en el recuadro inferior.<br>
+                    3. Click a "Execute" ñistar por sentimiento las reseñas
+                                      """,
+         tags=["Analisis de Sentimiento"])
 def sentiment_analysis( empresa_desarrolladora : str): 
     # Filtrar el DataFrame por la empresa desarrolladora proporcionada
     developer_df = df_as[df_as['developer'] == empresa_desarrolladora]
