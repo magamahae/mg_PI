@@ -24,13 +24,11 @@ df_developers = pd.read_parquet('DATA/year_developer_4.parquet')
 def PlayTimeGenre(genero: str):
     # Filtrar el DataFrame por el género proporcionado
     genre_df = df_games [df_games ['genres'] == genero]
-
-    # Si ya está agrupado por año y sumadas las horas, no es necesario volver a agrupar.
-    # Solo necesitamos encontrar el año con más horas jugadas.
-    
     # Encontrar el año con más horas jugadas
-    max_year = genre_df.loc[genre_df['play_hours'].idxmax(), 'release_year']
+    max_year = genre_df.loc[genre_df['genres'] == genero, 'release_year'].max()
 
+    #max_year = genre_df.loc[genre_df['play_hours'].idxmax(), 'release_year']
+    #return max_year
     return {"Año de lanzamiento con más horas jugadas para Género {}: {}".format(genero, max_year)}
 
     #retorno: {"Año de lanzamiento con más horas jugadas para Género X" : 2013}
