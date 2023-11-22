@@ -33,18 +33,17 @@ def PlayTimeGenre(genero: str):
 
     #retorno: {"Año de lanzamiento con más horas jugadas para Género X" : 2013}
 
-
-def UserForGenre(genero : str):
+def sentiment_analysis( empresa_desarrolladora : str): 
+    # Filtrar el DataFrame por la empresa desarrolladora proporcionada
+    developer_df = df_as[df_as['developer'] == empresa_desarrolladora]
     
-    # Filtrar el DataFrame por el género proporcionado
-    genre_df =df_2[df_2['genres'] == genero]
-    
-    #Encontrar el usuario con más horas jugadas para el género dado
-    max_user = genre_df.loc[genre_df['playtime_forever'].idxmax(), 'user_id']
+    # Crear el diccionario de retorno
+    result = {empresa_desarrolladora: {'Negative': 0, 'Neutral': 0, 'Positive': 0}}
 
-     # Crear una lista de la acumulación de horas jugadas por año
-    #hours_by_year = genre_df.groupby('release_year')['playtime_forever'].sum().reset_index()
-    #hours_by_year_list = [{"Año": int(year), "Horas": int(hours)} for year, hours in zip(hours_by_year['release_year'], hours_by_year['playtime_forever'])]
+    # Llenar el diccionario con la cantidad de registros para cada categoría de sentimiento
+    for sentiment, count in zip(developer_df['sentiment_analysis'], developer_df['recommend_count']):
+        sentiment_mapping = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
+        sentiment_category = sentiment_mapping[sentiment]
+        result[empresa_desarrolladora][sentiment_category] += count
 
-    #return {"Usuario con más horas jugadas para Género {}: {}".format(genero, max_user),"Horas jugadas": hours_by_year_list}
-    return genre_df
+    return result
