@@ -23,7 +23,7 @@ df_developers = pd.read_parquet('DATA/year_developer_4.parquet')
 @app.get('/PlayTimeGenre')
 def PlayTimeGenre(genero: str):
     # Filtrar el DataFrame por el género proporcionado
-    genre_df = df_games [df_games ['genres'] == genero]
+    genre_df = df_games_item[df_games ['genres'] == genero]
     # Encontrar el año con más horas jugadas
     max_year = genre_df.loc[genre_df['genres'] == genero, 'release_year'].max()
 
@@ -55,3 +55,32 @@ def sentiment_analysis( empresa_desarrolladora : str):
         result[empresa_desarrolladora][sentiment_category] += count
 
     return result
+
+#---------------------------------------------------------------------------------------#
+@app.get('/UserForGenre')
+def UserForGenre(genero : str):
+    
+   #Filtrar por el género especificado
+    df_genre = df_2[df_2['genres'] == genero]
+
+    #Si no hay datos para el género especificado, retorna un mensaje
+    if df_genre.empty:
+        return f"No hay datos para el género '{genero}'"
+
+    #Agrupar por usuario y género y calcular las horas jugadas sumando los valores
+    grouped = df_genre.groupby(['user_id'])['playtime_forever'].sum()
+
+    #Encontrar el usuario con más horas jugadas
+    max_playtime_user = grouped.idxmax()
+
+    #Filtrar por el usuario con más horas jugadas
+    df_user_max_playtime = df_genre[df_genre['user_id'] == max_playtime_user]
+
+    #Agrupar por año y calcular las horas jugadas sumando los valores
+    grouped_by_year = df_genre.groupby('release_year')['playtime_forever'].sum()
+
+    #Crear lista de acumulación de horas jugadas por año
+    acumulacion_horas = [{'Año': year, 'Horas': hours} for year, hours in grouped_by_year.items()]
+
+    #Retornar el resultado como un diccionario
+    return {"Usuario con más horas jugadas para Género {}".format(genero): max_playtime_user, "Horas jugadas": acumulacion_horas}
