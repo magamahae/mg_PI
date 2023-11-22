@@ -43,7 +43,7 @@ def PlayTimeGenre(genero: str):
          tags=["Analisis de Sentimiento"])
 def sentiment_analysis( empresa_desarrolladora : str): 
     # Filtrar el DataFrame por la empresa desarrolladora proporcionada
-    developer_df = df_as[df_as['developer'] == empresa_desarrolladora]
+    developer_df = df_reviews_as[df_reviews_as['developer'] == empresa_desarrolladora]
     
     # Crear el diccionario de retorno
     result = {empresa_desarrolladora: {'Negative': 0, 'Neutral': 0, 'Positive': 0}}
