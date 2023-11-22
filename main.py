@@ -33,3 +33,18 @@ def PlayTimeGenre(genero: str):
 
     #retorno: {"Año de lanzamiento con más horas jugadas para Género X" : 2013}
 
+
+def UserForGenre(genero : str):
+    
+    # Filtrar el DataFrame por el género proporcionado
+    genre_df =df_2[df_2['genres'] == genero]
+    
+    #Encontrar el usuario con más horas jugadas para el género dado
+    max_user = genre_df.loc[genre_df['playtime_forever'].idxmax(), 'user_id']
+
+     # Crear una lista de la acumulación de horas jugadas por año
+    #hours_by_year = genre_df.groupby('release_year')['playtime_forever'].sum().reset_index()
+    #hours_by_year_list = [{"Año": int(year), "Horas": int(hours)} for year, hours in zip(hours_by_year['release_year'], hours_by_year['playtime_forever'])]
+
+    #return {"Usuario con más horas jugadas para Género {}: {}".format(genero, max_user),"Horas jugadas": hours_by_year_list}
+    return genre_df
