@@ -36,7 +36,7 @@ def PlayTimeGenre(genero: str):
     #retorno: {"Año de lanzamiento con más horas jugadas para Género X" : 2013}
 
 #-------------------usuario más horas jugadas para el género por año------------#
-@app.get('/UserForGenre')
+'''@app.get('/UserForGenre')
 def UserForGenre(genero : str):
     
     # Filtrar el DataFrame por el género proporcionado
@@ -53,7 +53,7 @@ def UserForGenre(genero : str):
 
     #retorno: {"Usuario con más horas jugadas para Género X" : us213ndjss09sdf, 
               #"Horas jugadas":[{Año: 2013, Horas: 203}, {Año: 2012, Horas: 100}, {Año: 2011, Horas: 23}]} 
-
+'''
 #--------------3 de juegos MÁS recomendados por usuarios ----------------------#
 @app.get('/UsersRecommend')
 def UsersRecommend( año : int):
